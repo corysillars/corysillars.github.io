@@ -12,3 +12,5 @@ if (isMorning) {
 } else {
     h3.textContent = 'Good evening!'
 }
+const key = "It's a secret to everybody"
+localStorage.setItem(key, 'You have found it! You get a gem!!!') // store a secret message in local storage
