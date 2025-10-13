@@ -46,3 +46,32 @@ setInterval(() => {
     currentImage++
     showImages()
 },2000) 
+
+// add to-do list functionality to local storage
+const todoList = document.querySelector('.todo-list')
+const newTodoInput = document.querySelector('#new-todo')
+const addTodoButton = document.querySelector('button[type="button"]')
+
+addTodoButton.addEventListener('click', () => {
+    const todoText = newTodoInput.value.trim()
+    if (todoText) {
+        const li = document.createElement('li')
+        li.textContent = todoText
+        todoList.appendChild(li)
+        newTodoInput.value = ''
+    }
+})
+// Load existing to-dos from local storage
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTodos = JSON.parse(localStorage.getItem('todos')) || []
+    savedTodos.forEach(todo => {
+        const li = document.createElement('li')
+        li.textContent = todo
+        todoList.appendChild(li)
+    })
+})
+// Save to-dos to local storage whenever they are added
+addTodoButton.addEventListener('click', () => {
+    const todos = Array.from(todoList.children).map(li => li.textContent)
+    localStorage.setItem('todos', JSON.stringify(todos))
+})
