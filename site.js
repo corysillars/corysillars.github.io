@@ -75,3 +75,21 @@ addTodoButton.addEventListener('click', () => {
     const todos = Array.from(todoList.children).map(li => li.textContent)
     localStorage.setItem('todos', JSON.stringify(todos))
 })
+// Fetch and display a random Pokémon
+const pokemonDiv = document.querySelector('#pokemon')
+
+async function fetchRandomPokemon() {
+    const randomId = Math.floor(Math.random() * 898) + 1; // There are 898 Pokémon in the API
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
+    const data = await response.json();
+    return data;
+}
+
+function displayPokemon(pokemon) {
+    pokemonDiv.innerHTML = `
+        <h3>${pokemon.name}</h3>
+        <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+    `;
+}
+
+fetchRandomPokemon().then(displayPokemon);
